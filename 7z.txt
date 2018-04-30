@@ -1,0 +1,46 @@
+判断位数，引用不同的dll
+if (Environment.Is64BitProcess)
+            {
+                SevenZipBase.SetLibraryPath(@"E:\7z64.dll");
+            }
+            else
+            {
+                SevenZipBase.SetLibraryPath(@"E:\7z.dll");
+            }
+
+1、压缩调用
+     使用流传输
+using (FileStream ostream = new FileStream(outputpath, FileMode.Create, FileAccess.Write))
+{
+    using (FileStream istream = new FileStream(inputpath, FileMode.Open, FileAccess.Read))
+    {
+        SevenZipCompressor compressor = new SevenZipCompressor();
+        // 这里可以输入多个文件名/流对
+        Dictionary<string, Stream> dict = new Dictionary<string, Stream> { { inputpath, istream } };
+      compressor.CompressStreamDictionary(dict, ostream);
+    }
+}
+
+
+2、解压缩
+    
+using (FileStream istream = new FileStream(inputpath, FileMode.Open, FileAccess.Read))
+{
+    SevenZip.SevenZipExtractor extractor = new SevenZip.SevenZipExtractor(istream);
+    extractor.ExtractArchive(outputpath);    // 全部解压到指定目录
+    using (FileStream ostream = new FileStream(outputpath, FileMode.Create, FileAccess.Write))
+    {
+        extractor.ExtractFile(0, ostream);        // 流式解压指定文件
+    }
+}
+
+
+
+直接使用文件路径解压缩
+ using (SevenZipExtractor tmp = new SevenZipExtractor(@"E:\SevenZipSharp.dll 免费版.rar"))
+            {
+                for (int i = 0; i < tmp.ArchiveFileData.Count; i++)
+                {
+                    tmp.ExtractFiles(@"E:\", tmp.ArchiveFileData[i].Index);
+                }
+            }
