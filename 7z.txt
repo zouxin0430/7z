@@ -1,4 +1,6 @@
-ÅĞ¶ÏÎ»Êı£¬ÒıÓÃ²»Í¬µÄdll
+åˆ¤æ–­æœºå™¨ä½æ•°ä½æ•°ï¼Œå¼•ç”¨ä¸åŒçš„dll Â  
+æ³¨æ„ï¼Œä¸å¼•ç”¨å¯¹åº”çš„ä½æ•°ï¼Œä¼šæŠ¥æ‰¾ä¸åˆ°ç»„ä»¶çš„é”™
+7z.dllä¸ºäºŒè¿›åˆ¶åŠ¨æ€åº“ï¼Œä¸èƒ½ç›´æ¥å¼•ç”¨ï¼Œæ‰€æœ‰æˆ‘é€šè¿‡å¼•ç”¨SevenZipSharp.dllè°ƒç”¨7Z.DLLè¿›è¡Œä½¿ç”¨
 if (Environment.Is64BitProcess)
             {
                 SevenZipBase.SetLibraryPath(@"E:\7z64.dll");
@@ -8,36 +10,36 @@ if (Environment.Is64BitProcess)
                 SevenZipBase.SetLibraryPath(@"E:\7z.dll");
             }
 
-1¡¢Ñ¹Ëõµ÷ÓÃ
-     Ê¹ÓÃÁ÷´«Êä
+1ã€å‹ç¼©è°ƒç”¨
+     ä½¿ç”¨æµä¼ è¾“
 using (FileStream ostream = new FileStream(outputpath, FileMode.Create, FileAccess.Write))
 {
     using (FileStream istream = new FileStream(inputpath, FileMode.Open, FileAccess.Read))
     {
         SevenZipCompressor compressor = new SevenZipCompressor();
-        // ÕâÀï¿ÉÒÔÊäÈë¶à¸öÎÄ¼şÃû/Á÷¶Ô
+        // è¿™é‡Œå¯ä»¥è¾“å…¥å¤šä¸ªæ–‡ä»¶å/æµå¯¹
         Dictionary<string, Stream> dict = new Dictionary<string, Stream> { { inputpath, istream } };
       compressor.CompressStreamDictionary(dict, ostream);
     }
 }
 
 
-2¡¢½âÑ¹Ëõ
+2ã€è§£å‹ç¼©
     
 using (FileStream istream = new FileStream(inputpath, FileMode.Open, FileAccess.Read))
 {
     SevenZip.SevenZipExtractor extractor = new SevenZip.SevenZipExtractor(istream);
-    extractor.ExtractArchive(outputpath);    // È«²¿½âÑ¹µ½Ö¸¶¨Ä¿Â¼
+    extractor.ExtractArchive(outputpath);    // å…¨éƒ¨è§£å‹åˆ°æŒ‡å®šç›®å½•
     using (FileStream ostream = new FileStream(outputpath, FileMode.Create, FileAccess.Write))
     {
-        extractor.ExtractFile(0, ostream);        // Á÷Ê½½âÑ¹Ö¸¶¨ÎÄ¼ş
+        extractor.ExtractFile(0, ostream);        // æµå¼è§£å‹æŒ‡å®šæ–‡ä»¶
     }
 }
 
 
 
-Ö±½ÓÊ¹ÓÃÎÄ¼şÂ·¾¶½âÑ¹Ëõ
- using (SevenZipExtractor tmp = new SevenZipExtractor(@"E:\SevenZipSharp.dll Ãâ·Ñ°æ.rar"))
+ç›´æ¥ä½¿ç”¨æ–‡ä»¶è·¯å¾„è§£å‹ç¼©
+ using (SevenZipExtractor tmp = new SevenZipExtractor(@"E:\SevenZipSharp.dll å…è´¹ç‰ˆ.rar"))
             {
                 for (int i = 0; i < tmp.ArchiveFileData.Count; i++)
                 {
